@@ -3,4 +3,4 @@ A deep-learning program that teaches itself how to play Pong. Will create images
 
 The image below shows the graphs using a maximum score of 10 and maximum generation count of 1000:
 
-![Image of 1000 generations] (pongML_001_22-49-31.png)
+<img src="pongML_001_22-49-31.png">
