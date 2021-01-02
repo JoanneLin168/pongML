@@ -19,28 +19,33 @@ pygame.init()
 filename = Make_Graph.create_file()
 
 clock = pygame.time.Clock()
-FPS = 2000
+FPS = 120
 FONT = pygame.font.SysFont("Arial", 20)
-BLACK = pygame.Color("black")
+FONT_COLOUR = pygame.Color("white")
+
+# Colour
+ball_colour = (254,74,73)
+paddle_colour = (254,215,102)
+bg_colour = (69, 69, 69)
 
 # Score Counter
 def show_score(screen, score):
-    score_overlay = FONT.render('Score: '+str(score), True, BLACK)
+    score_overlay = FONT.render('Score: '+str(score), True, FONT_COLOUR)
     screen.blit(score_overlay, (10, 5))
 
 # FPS Counter
 def show_fps(screen, clock):
-    fps_overlay = FONT.render('FPS: '+str(int(clock.get_fps())), True, BLACK)
+    fps_overlay = FONT.render('FPS: '+str(int(clock.get_fps())), True, FONT_COLOUR)
     screen.blit(fps_overlay, (screen_width - 80, 5))
 
 # Paddle Counter
 def show_paddle_count(screen, paddles):
-    paddle_overlay = FONT.render('Paddle Count: '+str(len(paddles)), True, BLACK)
+    paddle_overlay = FONT.render('Paddle Count: '+str(len(paddles)), True, FONT_COLOUR)
     screen.blit(paddle_overlay, (10, 30))
 
 # Generation Counter
 def show_generation(screen, gen_winners):
-    paddle_overlay = FONT.render('Generation: '+str(len(gen_winners)+1), True, BLACK)
+    paddle_overlay = FONT.render('Generation: '+str(len(gen_winners)+1), True, FONT_COLOUR)
     screen.blit(paddle_overlay, (10, 55))
 
 def reset(winners, gen_winners):
@@ -72,7 +77,7 @@ def reset(winners, gen_winners):
             paddle.x = screen_width/2 - paddle.width/2
             paddle.y = screen_height - paddle.height - 20
             for j in range(len(paddle.coefficients)):
-                mutation_chance = random.randint(1, 20) # 10% chance to mutate one coefficient
+                mutation_chance = random.randint(1, 20) # 20% chance to mutate one coefficient
                 if (mutation_chance == True):
                     paddle.coefficients[j] = round(best.coefficients[j] + (random.randint(-50, 50) / 10000), 4) # i.e. +- range 0.05
                 else:
@@ -132,7 +137,7 @@ while running:
             running = False
 
     # Fill the background with white
-    screen.fill((255, 255, 255))
+    screen.fill(bg_colour)
 
     # Draw text
     show_fps(screen, clock)
@@ -142,12 +147,12 @@ while running:
 
     # Draw a solid blue circle in the centre
     # Parameters: screen, colour, (pos x of centre, pos y of centre), radius
-    pygame.draw.circle(screen, (255, 0, 0), (ball.x, ball.y), ball.radius)
+    pygame.draw.circle(screen, ball_colour, (ball.x, ball.y), ball.radius)
 
     # Draw a solid yellow rectangle from the top-left corner
     # Parameters: screen, colour, (pos x of corner, pos y of corner, width, height)
     for i in range(len(paddles)):
-        pygame.draw.rect(screen, (255,255,0), (paddles[i].x, paddles[i].y, paddles[i].width, paddles[i].height))
+        pygame.draw.rect(screen, paddle_colour, (paddles[i].x, paddles[i].y, paddles[i].width, paddles[i].height))
 
     keys = pygame.key.get_pressed()
 

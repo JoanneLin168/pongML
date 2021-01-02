@@ -10,18 +10,18 @@ import ball
 pygame.init()
 
 def show_score(screen, score):
-    score_overlay = FONT.render('Score: '+str(score), True, BLACK)
+    score_overlay = FONT.render('Score: '+str(score), True, FONT_COLOUR)
     screen.blit(score_overlay, (10, 5))
 
 # FPS Counter
 def show_fps(screen, clock):
-    fps_overlay = FONT.render('FPS: '+str(int(clock.get_fps())), True, BLACK)
+    fps_overlay = FONT.render('FPS: '+str(int(clock.get_fps())), True, FONT_COLOUR)
     screen.blit(fps_overlay, (screen_width - 80, 5))
 
 clock = pygame.time.Clock()
 FPS = 60
 FONT = pygame.font.SysFont("Arial", 20)
-BLACK = pygame.Color("black")
+FONT_COLOUR = pygame.Color("white")
 
 screen_width = 640
 screen_height = 640
@@ -37,6 +37,11 @@ paddle = paddle.Paddle()
 paddle.x = screen_width/2 - paddle.width/2
 paddle.y = screen_height - paddle.height - 20
 
+# Colour
+ball_colour = (254,74,73)
+paddle_colour = (254,215,102)
+bg_colour = (69, 69, 69)
+
 ### GAME ###
 
 # Run until the user asks to quit
@@ -50,7 +55,7 @@ while running:
             running = False
 
     # Fill the background with white
-    screen.fill((255, 255, 255))
+    screen.fill(bg_colour)
 
     # Draw text
     
@@ -59,8 +64,8 @@ while running:
 
     # Draw a solid blue circle in the center
     # Parameters: screen, colour, position, radius
-    pygame.draw.circle(screen, (255, 0, 0), (ball.x, ball.y), ball.radius)
-    pygame.draw.rect(screen, (255,255,0), (paddle.x, paddle.y, paddle.width, paddle.height))
+    pygame.draw.circle(screen, ball_colour, (ball.x, ball.y), ball.radius)
+    pygame.draw.rect(screen, paddle_colour, (paddle.x, paddle.y, paddle.width, paddle.height))
 
     keys = pygame.key.get_pressed()
 
