@@ -72,9 +72,9 @@ def draw_graphs(filename):
         balls_speed_coeff.append(coeff[3])
 
     fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(12, 4))
+    fig.suptitle("Graphs",
+                fontsize=14, fontweight='bold')
     ax = axes.ravel()
-
-    print(gen_count)
 
     ax[0].plot(gen_count, paddles_x_coeff)
     ax[0].set_title("Coefficient for paddle x vs time")
@@ -100,6 +100,11 @@ def draw_graphs(filename):
     ax[5].set_title("Number of winners per generation")
     ax[5].set(xlabel="Generation", ylabel="Number of winners")
 
+    # Source: https://stackoverflow.com/questions/7917107/add-footnote-under-the-x-axis-using-matplotlib
+    plt.figtext(0.8, 0.95,
+                "Optimal Coefficients = "+str(coefficients[-1:][0]),
+                ha="center",
+                bbox={"facecolor":"orange", "alpha":0.5, "pad":5})
     fig.tight_layout()
 
     # Saves the graph as an image
