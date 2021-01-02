@@ -10,6 +10,7 @@ import Ball
 
 ### INITATION ###
 # NOTE: There is no input verification
+gen = 0
 num_of_gens = int(input("Enter the number of generations you want this program to run for (Minimum = 100): "))
 max_score_per_gen = int(input("Enter the maximum score you want per generation: "))
 
@@ -151,9 +152,11 @@ while running:
                     best = paddle
         Make_Graph.add_to_file(filename, best, score, len(winners))
         score = 0
-        print("Progress: ",100 * round((len(gen_winners))/num_of_gens, 1), "%")
+        gen += 1
+        if (gen <= num_of_gens):
+            print("Progress: ", gen, "/", num_of_gens)
 
-    if len(gen_winners) >= num_of_gens:
+    if gen > num_of_gens:
         running = False
     
 
