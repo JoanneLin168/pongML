@@ -15,7 +15,6 @@ num_of_gens = int(input("Enter the number of generations you want this program t
 max_score_per_gen = int(input("Enter the maximum score you want per generation: "))
 FPS = int(input("Enter the frames drawn per second: "))
 create_file = True if (input("Do you want to save the results after the program has been run? Y/N").lower() == "y") else False
-print(create_file)
 if create_file:
     filename = Make_Graph.create_file()
 
