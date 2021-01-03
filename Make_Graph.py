@@ -38,8 +38,8 @@ def read_file(filename):
                     else:
                         tmp[i] = int(tmp[i])
                         
-                coefficients = tmp[0:4]
-                generations.append([coefficients, tmp[4], tmp[5]])
+                coefficients = tmp[0:3]
+                generations.append([coefficients, tmp[3], tmp[4]])
             except Exception as e:
                 pass
         
@@ -64,12 +64,10 @@ def draw_graphs(filename):
     paddles_x_coeff = []
     balls_x_coeff = []
     balls_y_coeff = []
-    balls_speed_coeff = []
     for coeff in coefficients:
         paddles_x_coeff.append(coeff[0])
         balls_x_coeff.append(coeff[1])
         balls_y_coeff.append(coeff[2])
-        balls_speed_coeff.append(coeff[3])
 
     fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(12, 4))
     fig.suptitle("Graphs",
@@ -88,17 +86,15 @@ def draw_graphs(filename):
     ax[2].set_title("Coefficient for ball y vs time")
     ax[2].set(xlabel="Generation", ylabel="Ball y coefficient")
 
-    ax[3].plot(gen_count, balls_speed_coeff)
-    ax[3].set_title("Coefficient for ball speed vs time")
-    ax[3].set(xlabel="Generation", ylabel="Ball speed coefficient")
+    ax[3].plot(gen_count, scores)
+    ax[3].set_title("Maximum scores vs time")
+    ax[3].set(xlabel="Generation", ylabel="Score")
 
-    ax[4].plot(gen_count, scores)
-    ax[4].set_title("Maximum scores vs time")
-    ax[4].set(xlabel="Generation", ylabel="Score")
+    ax[4].plot(gen_count, winners_count)
+    ax[4].set_title("Number of winners per generation")
+    ax[4].set(xlabel="Generation", ylabel="Number of winners")
 
-    ax[5].plot(gen_count, winners_count)
-    ax[5].set_title("Number of winners per generation")
-    ax[5].set(xlabel="Generation", ylabel="Number of winners")
+    ax[5].axis('off')
 
     # Source: https://stackoverflow.com/questions/7917107/add-footnote-under-the-x-axis-using-matplotlib
     plt.figtext(0.8, 0.95,

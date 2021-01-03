@@ -8,6 +8,6 @@ class Paddle:
         self.width = 100
         self.height = 10
         self.fitness = []
-        self.coefficients = [0,0,0,0]
+        self.coefficients = [0,0,0]
         for i in range(len(self.coefficients)):
             self.coefficients[i] = random.randint(0, 9999) / 10000

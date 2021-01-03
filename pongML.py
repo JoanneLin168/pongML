@@ -13,13 +13,16 @@ import Ball
 # NOTE: There is no input verification
 num_of_gens = int(input("Enter the number of generations you want this program to run for (Minimum = 100): "))
 max_score_per_gen = int(input("Enter the maximum score you want per generation: "))
+FPS = int(input("Enter the frames drawn per second: "))
+create_file = True if (input("Do you want to save the results after the program has been run? Y/N").lower() == "y") else False
+print(create_file)
+if create_file:
+    filename = Make_Graph.create_file()
 
 ### SETUP ###
 pygame.init()
-filename = Make_Graph.create_file()
 
 clock = pygame.time.Clock()
-FPS = 120
 FONT = pygame.font.SysFont("Arial", 20)
 FONT_COLOUR = pygame.Color("white")
 
@@ -77,9 +80,9 @@ def reset(winners, gen_winners):
             paddle.x = screen_width/2 - paddle.width/2
             paddle.y = screen_height - paddle.height - 20
             for j in range(len(paddle.coefficients)):
-                mutation_chance = random.randint(1, 20) # 20% chance to mutate one coefficient
+                mutation_chance = random.randint(1, 8) # 1 in 8 chance to mutate one coefficient
                 if (mutation_chance == True):
-                    paddle.coefficients[j] = round(best.coefficients[j] + (random.randint(-50, 50) / 10000), 4) # i.e. +- range 0.05
+                    paddle.coefficients[j] = round(best.coefficients[j] + (random.randint(-500, 500) / 10000), 4) # i.e. +- range 0.05
                 else:
                     paddle.coefficients[j] = best.coefficients[j]
             new_paddles.append(paddle)
@@ -161,7 +164,7 @@ while running:
     hit_paddle = False
     successful_paddles = []
     for paddle in paddles:
-        inputs = [paddle.x, ball.x, ball.y, ball.dx]
+        inputs = [paddle.x, ball.x, ball.y]
         paddle_move = calculateOutput(inputs, paddle.coefficients)
 
         if (paddle_move == 0):
@@ -173,7 +176,7 @@ while running:
         distance_x = abs(paddle.x+(paddle.width)/2 - ball.x)
         distance_y = abs(paddle.y - ball.y)
         distance_to_ball = math.sqrt(distance_x**2 + distance_y**2)
-        #new_fitness = 100 - (distance_to_ball/math.sqrt(screen_width**2 + screen_height**2))
+
         new_fitness = distance_to_ball
         paddle.fitness.append(new_fitness)
     
@@ -207,7 +210,8 @@ while running:
                 best_fitness = statistics.mean(best.fitness)
                 if paddle_fitness < best_fitness:
                     best = paddle
-        Make_Graph.add_to_file(filename, best, score, len(winners))
+        if create_file:
+            Make_Graph.add_to_file(filename, best, score, len(winners))
         score = 0
 
     if len(gen_winners) >= num_of_gens:
@@ -220,4 +224,5 @@ while running:
 # Done! Time to quit.
 pygame.quit()
 
-Make_Graph.draw_graphs(filename)
+if create_file:
+    Make_Graph.draw_graphs(filename)
