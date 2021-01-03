@@ -1,8 +1,11 @@
 # pongML
-<img src="pongML.png">
+<img src="images/pongML.png">
 
 ## What is pongML?
 PongML is a deep-learning program that teaches itself how to play Pong. It can create images of the graphs showing the trends of the program when the program finishes (i.e. when the user chooses to or when the program has reached its maximum number of generations)
+
+You can look at this (very lossy) gif demonstrating the what happens in pongML:
+<img src="images/pongML-example.gif">
 
 ## Example of the results pongML
 The image below shows the graphs using a maximum score of 100 and maximum generation count of 100:
