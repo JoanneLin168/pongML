@@ -12,6 +12,7 @@ import Ball
 ### INITATION ###
 # NOTE: There is no input verification
 max_score = int(input("Enter the maximum score you want per generation: "))
+FPS = int(input("Enter the frames drawn per second: "))
 
 ### SETUP ###
 # Score Counter
@@ -23,11 +24,6 @@ def show_score(screen, score):
 def show_fps(screen, clock):
     fps_overlay = FONT.render('FPS: '+str(int(clock.get_fps())), True, FONT_COLOUR)
     screen.blit(fps_overlay, (screen_width - 80, 5))
-
-# Paddle Counter
-def show_paddle_count(screen, paddles):
-    paddle_overlay = FONT.render('Paddle Count: '+str(len(paddles)), True, FONT_COLOUR)
-    screen.blit(paddle_overlay, (10, 30))
 
 def calculateOutput(inputs, coefficients):
     outputs = []
@@ -55,13 +51,11 @@ paddle.y = screen_height - paddle.height - 20
 paddle.coefficients[0] = float(input("Enter paddle x coefficient: "))
 paddle.coefficients[1] = float(input("Enter ball x coefficient: "))
 paddle.coefficients[2] = float(input("Enter ball y coefficient: "))
-paddle.coefficients[3] = float(input("Enter ball speed coefficient: "))
 
 ### GAME ###
 pygame.init()
 
 clock = pygame.time.Clock()
-FPS = 120
 FONT = pygame.font.SysFont("Arial", 20)
 FONT_COLOUR = pygame.Color("white")
 
@@ -99,7 +93,7 @@ while running:
 
     # MACHINE LEARNING
     i = 0
-    inputs = [paddle.x, ball.x, ball.y, ball.dx]
+    inputs = [paddle.x, ball.x, ball.y]
     paddle_move = calculateOutput(inputs, paddle.coefficients)
 
     if (paddle_move == 0):
